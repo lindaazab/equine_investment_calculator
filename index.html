@@ -376,11 +376,11 @@
                 </div>
                 <div class="result-item">
                     <div class="result-label">Total Monthly Costs</div>
-                    <div class="result-value" id="totalMonthlyCosts">$24,300</div>
+                    <div class="result-value" id="totalMonthlyCosts">$24,000</div>
                 </div>
                 <div class="result-item">
                     <div class="result-label">Total Investment</div>
-                    <div class="result-value" id="totalInvestment">$132,555</div>
+                    <div class="result-value" id="totalInvestment">$132,255</div>
                 </div>
                 <div class="result-item">
                     <div class="result-label">Gross Sale Price</div>
@@ -396,11 +396,11 @@
                 </div>
                 <div class="result-item">
                     <div class="result-label">Total Profit/Loss</div>
-                    <div class="result-value" id="totalProfit">$24,945</div>
+                    <div class="result-value" id="totalProfit">$25,245</div>
                 </div>
                 <div class="result-item">
                     <div class="result-label">ROI %</div>
-                    <div class="result-value" id="roiPercent">18.8%</div>
+                    <div class="result-value" id="roiPercent">19.1%</div>
                 </div>
             </div>
         </div>
@@ -411,7 +411,6 @@
                 <!-- Monthly breakdown will be populated by JavaScript -->
             </div>
         </div>
-
 
     <script>
         function togglePriceMethod() {
@@ -476,9 +475,15 @@
 
             // Calculate monthly expenses
             const monthlyExpenses = monthlyBoard + monthlyInsurance + monthlyShows;
-            // Shoeing: Upon arrival + every 6 weeks (1.5 months) after that
-            const shoeingFrequency = 1 + Math.floor(monthsToSale / 1.5); // 1 upon arrival + every 1.5 months
-            const totalShoeingCosts = shoeingFrequency * shoeing;
+            
+            // Calculate shoeing costs based on actual schedule
+            let totalShoeingCosts = 0;
+            for (let month = 1; month <= Math.ceil(monthsToSale); month++) {
+                if (month === 1 || month === 2 || month === 4 || month === 5) {
+                    totalShoeingCosts += shoeing;
+                }
+            }
+            
             const totalMonthlyCosts = monthlyExpenses * monthsToSale + totalShoeingCosts;
 
             // Calculate total investment
@@ -492,7 +497,6 @@
             // Calculate profit/loss
             const totalProfit = netSaleProceeds - totalInvestment;
             const roiPercent = totalInvestment > 0 ? (totalProfit / totalInvestment) * 100 : 0;
-            const annualizedROI = roiPercent * (12 / monthsToSale);
 
             // Update display
             document.getElementById('initialInvestment').textContent = formatCurrency(initialInvestment);
@@ -529,10 +533,19 @@
                 let monthCosts = monthlyExpenses;
                 let extras = '';
                 
-                // Shoeing upon arrival (month 1) then every 6 weeks (1.5 months) after that
-                if (month === 1 || (month - 1) % 1.5 === 0) {
+                // Corrected shoeing schedule: Month 1, 2, 4, 5 for 6-month timeline
+                if (month === 1) {
                     monthCosts += shoeingCost;
-                    extras = `<br><small style="color: #7b1e1e;">+ Shoeing: ${formatCurrency(shoeingCost)}</small>`;
+                    extras = `<br><small style="color: #7b1e1e;">+ Shoeing: ${formatCurrency(shoeingCost)} (upon arrival)</small>`;
+                } else if (month === 2) {
+                    monthCosts += shoeingCost;
+                    extras = `<br><small style="color: #7b1e1e;">+ Shoeing: ${formatCurrency(shoeingCost)} (6 weeks from arrival)</small>`;
+                } else if (month === 4) {
+                    monthCosts += shoeingCost;
+                    extras = `<br><small style="color: #7b1e1e;">+ Shoeing: ${formatCurrency(shoeingCost)} (6 weeks from last)</small>`;
+                } else if (month === 5) {
+                    monthCosts += shoeingCost;
+                    extras = `<br><small style="color: #7b1e1e;">+ Shoeing: ${formatCurrency(shoeingCost)} (6 weeks from last)</small>`;
                 }
 
                 monthDiv.innerHTML = `
