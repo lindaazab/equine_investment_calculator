@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Horse Investment Calculator</title>
+    <meta name="description" content="Calculate your ROI for importing horses from Mexico to USA.">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #2d5016 0%, #1a237e 50%, #7b1e1e 100%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 3px solid #2d5016;
+        }
+        
+        .company-name {
+            color: #2d5016;
+            font-size: 2.5em;
+            font-weight: bold;
+            margin: 0;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+        
+        .tagline {
+            color: #1a237e;
+            font-size: 1.2em;
+            margin: 10px 0;
+            font-style: italic;
+        }
+        
+        .calculator-title {
+            color: #7b1e1e;
+            font-size: 2em;
+            margin: 10px 0;
+        }
+        
+        .warning-box {
+            background: linear-gradient(135deg, #2d5016, #1a237e);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            font-weight: 500;
+        }
+        
+        .input-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+        
+        .input-group {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 4px solid #2d5016;
+        }
+        
+        .input-group h3 {
+            margin-top: 0;
+            color: #2d5016;
+            font-size: 1.2em;
+        }
+        
+        label {
+            display: block;
+            margin: 15px 0 5px;
+            font-weight: 600;
+            color: #1a237e;
+        }
+        
+        input[type="number"], select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        
+        input[type="number"]:focus, select:focus {
+            border-color: #2d5016;
+            outline: none;
+        }
+        
+        .results-section {
+            background: linear-gradient(135deg, #2d5016, #1a237e, #7b1e1e);
+            color: white;
+            padding: 25px;
+            border-radius: 15px;
+            margin-top: 30px;
+        }
+        
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        
+        .result-item {
+            background: rgba(255,255,255,0.15);
+            padding: 15px;
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        
+        .result-label {
+            font-size: 0.9em;
+            opacity: 0.9;
+            margin-bottom: 5px;
+        }
+        
+        .result-value {
+            font-size: 1.4em;
+            font-weight: bold;
+        }
+        
+        .profit-positive { color: #4caf50; }
+        .profit-negative { color: #f44336; }
+        
+        .timeline-section {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 30px;
+            border-left: 4px solid #7b1e1e;
+        }
+        
+        .timeline-section h3 {
+            color: #7b1e1e;
+            margin-top: 0;
+        }
+        
+        .monthly-breakdown {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .month-item {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #1a237e;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .important-info {
+            background: #fff8e1;
+            border: 1px solid #ffb74d;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+        
+        .calculator-highlight {
+            background: linear-gradient(135deg, #2d5016, #1a237e);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            text-align: center;
+        }
+        
+        .cta-section {
+            background: linear-gradient(135deg, #7b1e1e, #2d5016);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin-top: 30px;
+            text-align: center;
+        }
+        
+        .cta-button {
+            background: white;
+            color: #2d5016;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.2em;
+            font-weight: bold;
+            cursor: pointer;
+            margin: 10px;
+            transition: transform 0.3s;
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        
+        .lead-form {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            margin-top: 20px;
+            color: #333;
+        }
+        
+        .lead-form h3 {
+            color: #2d5016;
+            margin-top: 0;
+        }
+        
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        
+        .form-row input, .form-row textarea {
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+        
+        .form-row textarea {
+            grid-column: 1 / -1;
+            min-height: 100px;
+            resize: vertical;
+        }
+        
+        .submit-button {
+            background: #2d5016;
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1em;
+            cursor: pointer;
+            width: 100%;
+        }
+        
+        .disclaimer {
+            background: #f5f5f5;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 30px;
+            font-size: 0.9em;
+            color: #666;
+            border-left: 4px solid #7b1e1e;
+        }
+        
+        @media (max-width: 768px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            .company-name {
+                font-size: 2em;
+            }
+            .calculator-title {
+                font-size: 1.5em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1 class="company-name">EQUINE INVESTMENT RETURNS</h1>
+            <p class="tagline">Maximizing Returns Through Premium Equine Acquisitions</p>
+            <h2 class="calculator-title">🐎 Investment ROI Calculator</h2>
+        </div>
+        
+        <div class="warning-box">
+            💰 <strong>USMCA ADVANTAGE:</strong> Horses qualify for USMCA tariff exemption (0% vs 25% tariff) with proper certification. This saves $22,500+ on a $90k horse! 
+        </div>
+
+        <div class="input-section">
+            <div class="input-group">
+                <h3>💰 Horse Purchase & Initial Costs</h3>
+                <label for="purchasePrice">Horse Purchase Price (USD):</label>
+                <input type="number" id="purchasePrice" value="90000" oninput="calculateAll()">
+                
+                <label for="finderCommission">Finder's Commission (% of purchase price):</label>
+                <input type="number" id="finderCommission" value="10" step="0.1" oninput="calculateAll()">
+                
+                <label for="vetCheck">Vet Check (USD):</label>
+                <input type="number" id="vetCheck" value="3000" oninput="calculateAll()">
+                
+                <label for="transportation">Transportation from Mexico (USD):</label>
+                <input type="number" id="transportation" value="3000" oninput="calculateAll()">
+                
+                <label for="quarantine">Quarantine Costs (USD):</label>
+                <input type="number" id="quarantine" value="3255" oninput="calculateAll()">
+            </div>
+
+            <div class="input-group">
+                <h3>📅 Monthly Ongoing Expenses</h3>
+                <label for="monthlyBoard">Monthly Board (USD):</label>
+                <input type="number" id="monthlyBoard" value="1500" oninput="calculateAll()">
+                
+                <label for="monthlyInsurance">Monthly Insurance (USD):</label>
+                <input type="number" id="monthlyInsurance" value="300" oninput="calculateAll()">
+                
+                <label for="monthlyShows">Monthly Shows (USD):</label>
+                <input type="number" id="monthlyShows" value="2000" oninput="calculateAll()">
+                
+                <label for="shoeing">Shoeing (upon arrival + every 6 weeks):</label>
+                <input type="number" id="shoeing" value="300" oninput="calculateAll()">
+            </div>
+
+            <div class="input-group">
+                <h3>⏰ Timeline & Sale Details</h3>
+                <label for="monthsToSale">Months Until Sale:</label>
+                <input type="number" id="monthsToSale" value="6" step="0.5" min="1" max="12" oninput="calculateAll()">
+                
+                <label for="priceMethod">Sale Price Method:</label>
+                <select id="priceMethod" onchange="togglePriceMethod(); calculateAll();">
+                    <option value="fixed">Fixed Sale Price</option>
+                    <option value="multiplier">Multiplier (e.g., 2x purchase price)</option>
+                </select>
+                
+                <div id="multiplierSection" style="display: none;">
+                    <label for="saleMultiplier">Sale Price Multiplier:</label>
+                    <input type="number" id="saleMultiplier" value="2" step="0.1" min="1" oninput="calculateAll()">
+                </div>
+                
+                <div id="fixedSection">
+                    <label for="fixedSalePrice">Fixed Sale Price (USD):</label>
+                    <input type="number" id="fixedSalePrice" value="175000" oninput="calculateAll()">
+                </div>
+                
+                <label for="sellerCommission">Seller's Commission (%):</label>
+                <input type="number" id="sellerCommission" value="10" step="0.1" oninput="calculateAll()">
+            </div>
+
+            <div class="input-group">
+                <h3>🏛️ Import Settings</h3>
+                <label for="usesUSMCA">Uses USMCA Certification?</label>
+                <select id="usesUSMCA" onchange="calculateAll()">
+                    <option value="true">Yes - 0% Tariff (Recommended)</option>
+                    <option value="false">No - 25% Tariff</option>
+                </select>
+                
+                <label for="customsBroker">Customs Broker & Misc Fees (USD):</label>
+                <input type="number" id="customsBroker" value="0" oninput="calculateAll()">
+            </div>
+        </div>
+
+        <div class="calculator-highlight">
+            <h2>📊 Your Investment Analysis</h2>
+            <p>Selling for <span id="displaySalePrice">$175,000</span> after <span id="displayMonths">6</span> months</p>
+        </div>
+
+        <div class="results-section">
+            <div class="results-grid">
+                <div class="result-item">
+                    <div class="result-label">Initial Investment</div>
+                    <div class="result-value" id="initialInvestment">$108,255</div>
+                </div>
+                <div class="result-item">
+                    <div class="result-label">Monthly Expenses</div>
+                    <div class="result-value" id="monthlyExpenses">$3,800</div>
+                </div>
+                <div class="result-item">
+                    <div class="result-label">Total Monthly Costs</div>
+                    <div class="result-value" id="totalMonthlyCosts">$24,300</div>
+                </div>
+                <div class="result-item">
+                    <div class="result-label">Total Investment</div>
+                    <div class="result-value" id="totalInvestment">$132,555</div>
+                </div>
+                <div class="result-item">
+                    <div class="result-label">Gross Sale Price</div>
+                    <div class="result-value" id="grossSalePrice">$175,000</div>
+                </div>
+                <div class="result-item">
+                    <div class="result-label">Seller Commission</div>
+                    <div class="result-value" id="saleCommissionAmount">$17,500</div>
+                </div>
+                <div class="result-item">
+                    <div class="result-label">Net Sale Proceeds</div>
+                    <div class="result-value" id="netSaleProceeds">$157,500</div>
+                </div>
+                <div class="result-item">
+                    <div class="result-label">Total Profit/Loss</div>
+                    <div class="result-value" id="totalProfit">$24,945</div>
+                </div>
+                <div class="result-item">
+                    <div class="result-label">ROI %</div>
+                    <div class="result-value" id="roiPercent">18.8%</div>
+                </div>
+                <div class="result-item">
+                    <div class="result-label">Annualized ROI</div>
+                    <div class="result-value" id="annualizedROI">37.7%</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="timeline-section">
+            <h3>📅 Monthly Expense Breakdown</h3>
+            <div class="monthly-breakdown" id="monthlyBreakdown">
+                <!-- Monthly breakdown will be populated by JavaScript -->
+            </div>
+        </div>
+
+        <div class="cta-section">
+            <h2>Ready to Start Your Horse Investment Journey?</h2>
+            <p>Get personalized guidance from our expert team at Citadel Equine Investments</p>
+            <button class="cta-button" onclick="toggleLeadForm()">Contact Us for More Information</button>
+            <button class="cta-button" onclick="window.print()">Print This Analysis</button>
+            
+            <div id="leadForm" class="lead-form" style="display: none;">
+                <h3>Get Expert Consultation</h3>
+                <form onsubmit="submitForm(event)">
+                    <div class="form-row">
+                        <input type="text" placeholder="First Name" required>
+                        <input type="text" placeholder="Last Name" required>
+                    </div>
+                    <div class="form-row">
+                        <input type="email" placeholder="Email Address" required>
+                        <input type="tel" placeholder="Phone Number">
+                    </div>
+                    <div class="form-row">
+                        <input type="number" placeholder="Investment Budget" min="0">
+                        <input type="text" placeholder="Timeline (e.g., 3-6 months)">
+                    </div>
+                    <div class="form-row">
+                        <textarea placeholder="Tell us about your investment goals and any specific requirements..."></textarea>
+                    </div>
+                    <button type="submit" class="submit-button">Request Consultation</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="timeline-section">
+            <h3>🔍 Key Requirements & Information</h3>
+            
+            <div class="important-info">
+                <strong>USMCA Certification Benefits:</strong> Using USMCA certification saves 25% tariff. On a $90k horse, this saves $22,500+ making the difference between profit and loss.
+            </div>
+            
+            <h4>Required Documentation:</h4>
+            <ul>
+                <li>USMCA certificate of origin (for 0% tariff)</li>
+                <li>USDA import permit (apply 7+ days before shipment)</li>
+                <li>Mexican government health certificate (within 30 days)</li>
+                <li>Negative tests for: dourine, glanders, equine infectious anemia, piroplasmosis</li>
+                <li>Screwworm treatment certificate</li>
+                <li>60-day residency certificate in Mexico</li>
+            </ul>
+            
+           
+    <script>
+        function togglePriceMethod() {
+            const priceMethod = document.getElementById('priceMethod').value;
+            const multiplierSection = document.getElementById('multiplierSection');
+            const fixedSection = document.getElementById('fixedSection');
+            
+            if (priceMethod === 'fixed') {
+                multiplierSection.style.display = 'none';
+                fixedSection.style.display = 'block';
+            } else {
+                multiplierSection.style.display = 'block';
+                fixedSection.style.display = 'none';
+            }
+        }
+
+        function toggleLeadForm() {
+            const form = document.getElementById('leadForm');
+            form.style.display = form.style.display === 'none' ? 'block' : 'none';
+        }
+
+        function submitForm(event) {
+            event.preventDefault();
+            alert('Thank you for your interest! We will contact you within 24 hours to discuss your horse investment opportunities.');
+            document.getElementById('leadForm').style.display = 'none';
+        }
+
+        function formatCurrency(amount) {
+            return new Intl.NumberFormat('en-US', {
+                style: 'currency',
+                currency: 'USD',
+                minimumFractionDigits: 0,
+                maximumFractionDigits: 0
+            }).format(amount);
+        }
+
+        function calculateAll() {
+            // Get input values
+            const purchasePrice = parseFloat(document.getElementById('purchasePrice').value) || 0;
+            const finderCommissionRate = parseFloat(document.getElementById('finderCommission').value) || 0;
+            const vetCheck = parseFloat(document.getElementById('vetCheck').value) || 0;
+            const transportation = parseFloat(document.getElementById('transportation').value) || 0;
+            const quarantine = parseFloat(document.getElementById('quarantine').value) || 0;
+            const monthlyBoard = parseFloat(document.getElementById('monthlyBoard').value) || 0;
+            const monthlyInsurance = parseFloat(document.getElementById('monthlyInsurance').value) || 0;
+            const monthlyShows = parseFloat(document.getElementById('monthlyShows').value) || 0;
+            const shoeing = parseFloat(document.getElementById('shoeing').value) || 0;
+            const monthsToSale = parseFloat(document.getElementById('monthsToSale').value) || 1;
+            const saleMultiplier = parseFloat(document.getElementById('saleMultiplier').value) || 2;
+            const fixedSalePrice = parseFloat(document.getElementById('fixedSalePrice').value) || 0;
+            const priceMethod = document.getElementById('priceMethod').value;
+            const sellerCommissionRate = parseFloat(document.getElementById('sellerCommission').value) || 0;
+            const usesUSMCA = document.getElementById('usesUSMCA').value === 'true';
+            const customsBroker = parseFloat(document.getElementById('customsBroker').value) || 0;
+
+            // Calculate initial costs
+            const finderCommission = purchasePrice * (finderCommissionRate / 100);
+            const tariffRate = usesUSMCA ? 0 : 25;
+            const tariffAmount = purchasePrice * (tariffRate / 100);
+            
+            const initialInvestment = purchasePrice + finderCommission + vetCheck + transportation + quarantine + tariffAmount + customsBroker;
+
+            // Calculate monthly expenses
+            const monthlyExpenses = monthlyBoard + monthlyInsurance + monthlyShows;
+            // Shoeing: Upon arrival + every 6 weeks (1.5 months) after that
+            const shoeingFrequency = 1 + Math.floor(monthsToSale / 1.5); // 1 upon arrival + every 1.5 months
+            const totalShoeingCosts = shoeingFrequency * shoeing;
+            const totalMonthlyCosts = monthlyExpenses * monthsToSale + totalShoeingCosts;
+
+            // Calculate total investment
+            const totalInvestment = initialInvestment + totalMonthlyCosts;
+
+            // Calculate sale details
+            const grossSalePrice = priceMethod === 'fixed' ? fixedSalePrice : purchasePrice * saleMultiplier;
+            const saleCommissionAmount = grossSalePrice * (sellerCommissionRate / 100);
+            const netSaleProceeds = grossSalePrice - saleCommissionAmount;
+
+            // Calculate profit/loss
+            const totalProfit = netSaleProceeds - totalInvestment;
+            const roiPercent = totalInvestment > 0 ? (totalProfit / totalInvestment) * 100 : 0;
+            const annualizedROI = roiPercent * (12 / monthsToSale);
+
+            // Update display
+            document.getElementById('initialInvestment').textContent = formatCurrency(initialInvestment);
+            document.getElementById('monthlyExpenses').textContent = formatCurrency(monthlyExpenses);
+            document.getElementById('totalMonthlyCosts').textContent = formatCurrency(totalMonthlyCosts);
+            document.getElementById('totalInvestment').textContent = formatCurrency(totalInvestment);
+            document.getElementById('grossSalePrice').textContent = formatCurrency(grossSalePrice);
+            document.getElementById('saleCommissionAmount').textContent = formatCurrency(saleCommissionAmount);
+            document.getElementById('netSaleProceeds').textContent = formatCurrency(netSaleProceeds);
+            
+            document.getElementById('displaySalePrice').textContent = formatCurrency(grossSalePrice);
+            document.getElementById('displayMonths').textContent = monthsToSale;
+
+            const profitElement = document.getElementById('totalProfit');
+            profitElement.textContent = formatCurrency(totalProfit);
+            profitElement.className = 'result-value ' + (totalProfit >= 0 ? 'profit-positive' : 'profit-negative');
+            
+            const roiElement = document.getElementById('roiPercent');
+            roiElement.textContent = roiPercent.toFixed(1) + '%';
+            roiElement.className = 'result-value ' + (roiPercent >= 0 ? 'profit-positive' : 'profit-negative');
+            
+            const annualizedElement = document.getElementById('annualizedROI');
+            annualizedElement.textContent = annualizedROI.toFixed(1) + '%';
+            annualizedElement.className = 'result-value ' + (annualizedROI >= 0 ? 'profit-positive' : 'profit-negative');
+
+            // Generate monthly breakdown
+            generateMonthlyBreakdown(monthsToSale, monthlyExpenses, shoeing);
+        }
+
+        function generateMonthlyBreakdown(monthsToSale, monthlyExpenses, shoeingCost) {
+            const breakdown = document.getElementById('monthlyBreakdown');
+            breakdown.innerHTML = '';
+
+            for (let month = 1; month <= Math.ceil(monthsToSale); month++) {
+                const monthDiv = document.createElement('div');
+                monthDiv.className = 'month-item';
+                
+                let monthCosts = monthlyExpenses;
+                let extras = '';
+                
+                // Shoeing upon arrival (month 1) then every 6 weeks (1.5 months) after that
+                if (month === 1 || (month - 1) % 1.5 === 0) {
+                    monthCosts += shoeingCost;
+                    extras = `<br><small style="color: #7b1e1e;">+ Shoeing: ${formatCurrency(shoeingCost)}</small>`;
+                }
+
+                monthDiv.innerHTML = `
+                    <div><strong>Month ${month}</strong></div>
+                    <div>${formatCurrency(monthCosts)}</div>
+                    ${extras}
+                `;
+                breakdown.appendChild(monthDiv);
+            }
+        }
+
+        // Initialize calculations
+        calculateAll();
+    </script>
+</body>
+</html>
