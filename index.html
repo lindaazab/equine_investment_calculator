@@ -402,10 +402,6 @@
                     <div class="result-label">ROI %</div>
                     <div class="result-value" id="roiPercent">18.8%</div>
                 </div>
-                <div class="result-item">
-                    <div class="result-label">Annualized ROI</div>
-                    <div class="result-value" id="annualizedROI">37.7%</div>
-                </div>
             </div>
         </div>
 
@@ -416,34 +412,6 @@
             </div>
         </div>
 
-        <div class="cta-section">
-            <h2>Ready to Start Your Horse Investment Journey?</h2>
-            <p>Get personalized guidance from our expert team at Citadel Equine Investments</p>
-            <button class="cta-button" onclick="toggleLeadForm()">Contact Us for More Information</button>
-            <button class="cta-button" onclick="window.print()">Print This Analysis</button>
-            
-            <div id="leadForm" class="lead-form" style="display: none;">
-                <h3>Get Expert Consultation</h3>
-                <form onsubmit="submitForm(event)">
-                    <div class="form-row">
-                        <input type="text" placeholder="First Name" required>
-                        <input type="text" placeholder="Last Name" required>
-                    </div>
-                    <div class="form-row">
-                        <input type="email" placeholder="Email Address" required>
-                        <input type="tel" placeholder="Phone Number">
-                    </div>
-                    <div class="form-row">
-                        <input type="number" placeholder="Investment Budget" min="0">
-                        <input type="text" placeholder="Timeline (e.g., 3-6 months)">
-                    </div>
-                    <div class="form-row">
-                        <textarea placeholder="Tell us about your investment goals and any specific requirements..."></textarea>
-                    </div>
-                    <button type="submit" class="submit-button">Request Consultation</button>
-                </form>
-            </div>
-        </div>
 
     <script>
         function togglePriceMethod() {
@@ -545,10 +513,6 @@
             const roiElement = document.getElementById('roiPercent');
             roiElement.textContent = roiPercent.toFixed(1) + '%';
             roiElement.className = 'result-value ' + (roiPercent >= 0 ? 'profit-positive' : 'profit-negative');
-            
-            const annualizedElement = document.getElementById('annualizedROI');
-            annualizedElement.textContent = annualizedROI.toFixed(1) + '%';
-            annualizedElement.className = 'result-value ' + (annualizedROI >= 0 ? 'profit-positive' : 'profit-negative');
 
             // Generate monthly breakdown
             generateMonthlyBreakdown(monthsToSale, monthlyExpenses, shoeing);
