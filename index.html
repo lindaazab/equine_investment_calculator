@@ -234,9 +234,8 @@
                 <label for="vetCheck">Vet Check (USD):</label>
                 <input type="number" id="vetCheck" value="3000" oninput="calculateAll()">
                 
-                <label for="transportation">Transportation & Quarantine (USD):</label>
-                <input type="number" id="transportation" value="3000" oninput="calculateAll()">
-                
+                <label for="transportation">Transportation + Quarantine (USD):</label>
+                <input type="number" id="transportation" value="6255" oninput="calculateAll()">
             </div>
 
             <div class="input-group">
@@ -284,7 +283,6 @@
                 <label for="tariffAmount">Tariff Amount (USD):</label>
                 <input type="number" id="tariffAmount" value="0" oninput="calculateAll()">
                 <small style="color: #666;">USMCA certified horses qualify for $0 tariff. Without certification, tariffs can be $22,500+ on a $90k horse.</small>
-
             </div>
         </div>
 
@@ -374,7 +372,6 @@
             const finderCommissionRate = parseFloat(document.getElementById('finderCommission').value) || 0;
             const vetCheck = parseFloat(document.getElementById('vetCheck').value) || 0;
             const transportation = parseFloat(document.getElementById('transportation').value) || 0;
-            const quarantine = parseFloat(document.getElementById('quarantine').value) || 0;
             const monthlyBoard = parseFloat(document.getElementById('monthlyBoard').value) || 0;
             const monthlyInsurance = parseFloat(document.getElementById('monthlyInsurance').value) || 0;
             const monthlyShows = parseFloat(document.getElementById('monthlyShows').value) || 0;
@@ -385,12 +382,11 @@
             const priceMethod = document.getElementById('priceMethod').value;
             const sellerCommissionRate = parseFloat(document.getElementById('sellerCommission').value) || 0;
             const tariffAmount = parseFloat(document.getElementById('tariffAmount').value) || 0;
-            const customsBroker = parseFloat(document.getElementById('customsBroker').value) || 0;
 
             // Calculate initial costs
             const finderCommission = purchasePrice * (finderCommissionRate / 100);
             
-            const initialInvestment = purchasePrice + finderCommission + vetCheck + transportation + quarantine + tariffAmount + customsBroker;
+            const initialInvestment = purchasePrice + finderCommission + vetCheck + transportation + tariffAmount;
 
             // Calculate monthly expenses
             const monthlyExpenses = monthlyBoard + monthlyInsurance + monthlyShows;
